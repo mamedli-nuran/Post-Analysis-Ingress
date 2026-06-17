@@ -1,5 +1,9 @@
 package com.post.ms.post.service;
 
-public interface PostService {
+import com.post.ms.post.dto.response.PostInfoResponse;
 
+import java.util.List;
+
+public interface PostService {
+    List<PostInfoResponse> getPosts();
 }

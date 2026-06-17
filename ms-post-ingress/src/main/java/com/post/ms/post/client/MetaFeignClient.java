@@ -1,9 +1,8 @@
-package com.post.ms.post.feign;
+package com.post.ms.post.client;
 
 import com.post.ms.post.configuration.FeignClientConfig;
-import com.post.ms.post.dto.external.MetaFeedResponse;
+import com.post.ms.post.client.external.MetaFeedResponse;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.cloud.openfeign.FeignClientProperties;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 

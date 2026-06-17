@@ -1,4 +1,4 @@
-package com.post.ms.post.dto.external;
+package com.post.ms.post.client.external;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -1,24 +1,27 @@
 package com.post.ms.post.controller;
 
-import com.post.ms.post.feign.MetaFeignClient;
+import com.post.ms.post.dto.response.PostInfoResponse;
+import com.post.ms.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
+@RequestMapping("/api/v1/posts")
 @RequiredArgsConstructor
 public class PostController {
-    private final MetaFeignClient metaFeignClient;
+    private final PostService postService;
 
-    String fields = "id,message,created_time,reactions.summary(true),comments.summary(true)";
-    int limit = 20;
-
-    @GetMapping("/posts")
-    public ResponseEntity<?> getPosts() {
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(metaFeignClient.getFeed(fields,  limit));
+    @GetMapping
+    public ResponseEntity<List<PostInfoResponse>> getPosts() {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(postService.getPosts());
 
     }
 

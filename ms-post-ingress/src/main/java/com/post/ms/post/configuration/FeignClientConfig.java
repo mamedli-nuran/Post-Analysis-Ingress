@@ -1,25 +1,25 @@
 package com.post.ms.post.configuration;
 
 
+import com.post.ms.post.properties.ApplicationProperties;
 import feign.RequestInterceptor;
-import feign.RequestTemplate;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
-public class FeignClientConfig {
+import static com.post.ms.post.util.ApplicationConstants.AUTH_HEADER_NAME;
+import static com.post.ms.post.util.ApplicationConstants.AUTH_HEADER_PREFIX;
 
-    @Value("${meta.api.access-token}")
-    private String accessToken;
+@Configuration
+@RequiredArgsConstructor
+public class FeignClientConfig {
+    private final ApplicationProperties applicationProperties;
 
     @Bean
     public RequestInterceptor feignAuthInterceptor() {
-        return new RequestInterceptor() {
-            @Override
-            public void apply(RequestTemplate template) {
-                template.header("Authorization", "Bearer " + accessToken);
-            }
-        };
+        return template ->
+                template.header(
+                        AUTH_HEADER_NAME,
+                        AUTH_HEADER_PREFIX + applicationProperties.accessToken());
     }
 }
