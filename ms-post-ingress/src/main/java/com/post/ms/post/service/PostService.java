@@ -5,5 +5,6 @@ import com.post.ms.post.dto.response.PostInfoResponse;
 import java.util.List;
 
 public interface PostService {
-    List<PostInfoResponse> getPosts();
+    List<PostInfoResponse> getLimitedPosts();
+    List<PostInfoResponse> getEngagementPosts();
 }

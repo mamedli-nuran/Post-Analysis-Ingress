@@ -21,8 +21,15 @@ public class PostController {
     public ResponseEntity<List<PostInfoResponse>> getPosts() {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(postService.getPosts());
+                .body(postService.getLimitedPosts());
 
     }
 
+
+    @GetMapping("top")
+    public ResponseEntity<List<PostInfoResponse>> getTopPosts() {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(postService.getEngagementPosts());
+    }
 }

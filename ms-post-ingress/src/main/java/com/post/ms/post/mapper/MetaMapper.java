@@ -13,7 +13,15 @@ public enum MetaMapper {
     public List<PostInfoResponse> toPostResponse(List<PostItem> data) {
         List<PostInfoResponse> list = new ArrayList<>();
         for (PostItem postItem : data) {
-            list.add(new PostInfoResponse(postItem.id(), postItem.message(), postItem.createdTime(), postItem.comments().summary().totalCount(), postItem.reactions().summary().totalCount() ));
+            list.add(
+                    PostInfoResponse.builder()
+                            .id(postItem.id())
+                            .message(postItem.message())
+                            .createdTime(postItem.createdTime())
+                            .reactionTotalCount(postItem.reactions().summary().totalCount())
+                            .commentTotalCount(postItem.comments().summary().totalCount())
+                            .build()
+            );
         }
         return list;
     }
