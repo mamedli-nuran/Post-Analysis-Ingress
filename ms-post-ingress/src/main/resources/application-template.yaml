@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: ms-post-ingress
+
+meta:
+  api:
+    base-url: https://graph.facebook.com/v25.0
+    access-token: "${META_ACCESS_TOKEN}"
