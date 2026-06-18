@@ -1,6 +1,7 @@
 package com.post.ms.post.service.impl;
 
 import com.post.ms.post.client.external.MetaFeedResponse;
+import com.post.ms.post.dto.response.BestWeekDayResponse;
 import com.post.ms.post.dto.response.EngagementInfoResponse;
 import com.post.ms.post.dto.response.PostInfoResponse;
 import com.post.ms.post.client.MetaFeignClient;
@@ -9,8 +10,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static com.post.ms.post.mapper.MetaMapper.META_MAPPER;
 import static com.post.ms.post.mapper.PostMapper.POST_MAPPER;
@@ -29,7 +35,8 @@ public class PostServiceImpl implements PostService {
         try {
             feed = metaFeignClient.getFeed(FIELD_FOR_POST_INFO, POST_LIMIT);
         } catch (Exception e) {
-            log.warn(META_API_NOT_AVAILABLE);
+            log.error(META_API_NOT_AVAILABLE);
+            log.error(e.getMessage());
             return POSTS_GENERATOR.getMockPosts();
         }
 
@@ -49,10 +56,31 @@ public class PostServiceImpl implements PostService {
                 .toList();
     }
 
+    @Override
+    public BestWeekDayResponse getBestDay() {
+        Map<DayOfWeek, Integer> likesByDay = getLikesByDay(getLimitedPosts());
+
+        Map.Entry<DayOfWeek, Integer> bestDayData = likesByDay.entrySet()
+                .stream()
+                .max(Map.Entry.comparingByValue())
+                .orElseThrow();
+
+        return POST_MAPPER.toBestWeekDayResponse(bestDayData);
+    }
 
     private int calculateEngagement(PostInfoResponse post) {
         return post.commentTotalCount() + post.reactionTotalCount();
     }
 
+    private Map<DayOfWeek, Integer> getLikesByDay(List<PostInfoResponse> posts) {
+
+        return posts.stream()
+                .collect(Collectors.groupingBy(
+                        post -> OffsetDateTime
+                                .parse(post.createdTime())
+                                .getDayOfWeek(),
+                        Collectors.summingInt(PostInfoResponse::reactionTotalCount)
+                ));
+    }
 
 }

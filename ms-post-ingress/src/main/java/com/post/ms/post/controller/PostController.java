@@ -1,8 +1,10 @@
 package com.post.ms.post.controller;
 
+import com.post.ms.post.dto.response.BestWeekDayResponse;
 import com.post.ms.post.dto.response.EngagementInfoResponse;
 import com.post.ms.post.dto.response.PostInfoResponse;
 import com.post.ms.post.service.PostService;
+import feign.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,5 +34,12 @@ public class PostController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(postService.getEngagementPosts());
+    }
+
+    @GetMapping("/best-day")
+    public ResponseEntity<BestWeekDayResponse> getBestDay() {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(postService.getBestDay());
     }
 }
