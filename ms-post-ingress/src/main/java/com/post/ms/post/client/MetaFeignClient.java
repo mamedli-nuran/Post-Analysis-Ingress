@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(
         name = "metaGraphClient",
-        url = "${meta.api.base-url}",
+        url = "${meta.api.base-url:https://graph.facebook.com/v25.0}",
         configuration = FeignClientConfig.class
 )
 public interface MetaFeignClient {
