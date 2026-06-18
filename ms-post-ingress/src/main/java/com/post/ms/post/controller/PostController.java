@@ -1,5 +1,6 @@
 package com.post.ms.post.controller;
 
+import com.post.ms.post.dto.response.EngagementInfoResponse;
 import com.post.ms.post.dto.response.PostInfoResponse;
 import com.post.ms.post.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +28,7 @@ public class PostController {
 
 
     @GetMapping("top")
-    public ResponseEntity<List<PostInfoResponse>> getTopPosts() {
+    public ResponseEntity<List<EngagementInfoResponse>> getTopPosts() {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(postService.getEngagementPosts());

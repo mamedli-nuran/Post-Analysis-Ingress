@@ -1,10 +1,10 @@
 package com.post.ms.post.service.impl;
 
 import com.post.ms.post.client.external.MetaFeedResponse;
+import com.post.ms.post.dto.response.EngagementInfoResponse;
 import com.post.ms.post.dto.response.PostInfoResponse;
 import com.post.ms.post.client.MetaFeignClient;
 import com.post.ms.post.service.PostService;
-import com.post.ms.post.util.MockPostsGenerator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -13,6 +13,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import static com.post.ms.post.mapper.MetaMapper.META_MAPPER;
+import static com.post.ms.post.mapper.PostMapper.POST_MAPPER;
 import static com.post.ms.post.util.ApplicationConstants.*;
 import static com.post.ms.post.util.MockPostsGenerator.POSTS_GENERATOR;
 
@@ -37,13 +38,14 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostInfoResponse> getEngagementPosts() {
-
-        // todo добавить поле где показывается engagement для каждого поста
-        return getLimitedPosts().stream()
-                .sorted(Comparator.comparingInt(this::calculateEngagement)
-                                .reversed())
+    public List<EngagementInfoResponse> getEngagementPosts() {
+        List<PostInfoResponse> posts = getLimitedPosts().stream()
+                .sorted(Comparator.comparingInt(this::calculateEngagement).reversed())
                 .limit(3)
+                .toList();
+
+        return posts.stream()
+                .map(POST_MAPPER::toEngagementResponse)
                 .toList();
     }
 
