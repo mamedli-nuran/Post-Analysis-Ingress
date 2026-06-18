@@ -11,4 +11,7 @@ public class ApplicationConstants {
 
     public static final String AUTH_HEADER_NAME = "Authorization";
     public static final String AUTH_HEADER_PREFIX = "Bearer ";
+
+    public static final String GLOBAL_ERROR_MESSAGE = "Unexcepted error occurred by Nuran team";
+    public static final String META_API_NOT_AVAILABLE = "Meta API is not available";
 }
