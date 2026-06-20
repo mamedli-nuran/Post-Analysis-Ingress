@@ -4,7 +4,6 @@ import com.post.ms.post.dto.response.BestWeekDayResponse;
 import com.post.ms.post.dto.response.EngagementInfoResponse;
 import com.post.ms.post.dto.response.PostInfoResponse;
 import com.post.ms.post.service.PostService;
-import feign.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,15 +42,5 @@ public class PostController {
                 .body(postService.getBestDay());
     }
 
-    @GetMapping("/privacy")
-    public String privacy() {
-    return """
-        Privacy Policy
-        
-        This application is created for educational purposes.
-        No personal data is stored or shared with third parties.
-        Data received from Meta APIs is used only for demonstration and analysis.
-        Contact: your-email@example.com
-        """;
-    }
+
 }
