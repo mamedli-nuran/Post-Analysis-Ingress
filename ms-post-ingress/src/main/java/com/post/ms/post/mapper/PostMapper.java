@@ -14,7 +14,7 @@ public enum PostMapper {
         return EngagementInfoResponse.builder()
                 .id(postInfoResponse.id())
                 .message(postInfoResponse.message())
-                .createdTime(postInfoResponse.createdTime())
+                .createdTime(postInfoResponse.createdTime().toString())
                 .reactionTotalCount(postInfoResponse.reactionTotalCount())
                 .commentTotalCount(postInfoResponse.commentTotalCount())
                 .engagement(postInfoResponse.reactionTotalCount() + postInfoResponse.commentTotalCount())

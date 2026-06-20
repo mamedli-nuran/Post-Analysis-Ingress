@@ -11,8 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
-import java.time.OffsetDateTime;
-import java.time.format.DateTimeFormatter;
+
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -76,9 +75,7 @@ public class PostServiceImpl implements PostService {
 
         return posts.stream()
                 .collect(Collectors.groupingBy(
-                        post -> OffsetDateTime
-                                .parse(post.createdTime())
-                                .getDayOfWeek(),
+                        post -> post.createdTime().getDayOfWeek(),
                         Collectors.summingInt(PostInfoResponse::reactionTotalCount)
                 ));
     }
